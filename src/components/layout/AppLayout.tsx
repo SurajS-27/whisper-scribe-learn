@@ -4,6 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
 import AppSidebar from './AppSidebar';
+import { ThemeToggleSimple } from '@/components/ThemeToggle';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -26,16 +27,23 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       
       <div className="lg:pl-64">
         {/* Header */}
-        <header className="sticky top-0 z-30 flex items-center justify-end h-16 px-6 border-b bg-background">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={signOut} 
-            className="flex items-center gap-2"
-          >
-            <LogOut className="w-4 h-4" />
-            <span>Sign out</span>
-          </Button>
+        <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-6 border-b bg-background">
+          <div>
+            {/* Left side of header (empty for now) */}
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <ThemeToggleSimple />
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={signOut} 
+              className="flex items-center gap-2"
+            >
+              <LogOut className="w-4 h-4" />
+              <span>Sign out</span>
+            </Button>
+          </div>
         </header>
 
         {/* Main content */}
