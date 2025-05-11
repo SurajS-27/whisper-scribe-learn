@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 
 // Types for our authentication context
@@ -184,12 +184,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 export const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [redirectAttempted, setRedirectAttempted] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) {
-      navigate('/');
+    // Only attempt to redirect once after loading is complete
+    if (!loading && !user && !redirectAttempted) {
+      setRedirectAttempted(true);
+      // Store the attempted URL to redirect back after login
+      navigate('/auth', { state: { from: location.pathname } });
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, location.pathname, redirectAttempted]);
 
   if (loading) {
     return (

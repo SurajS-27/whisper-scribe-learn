@@ -16,6 +16,6 @@ export default function Index() {
     );
   }
   
-  // If user is authenticated, redirect to dashboard, otherwise to auth page
+  // Only redirect once when the auth state is determined
   return <Navigate to={user ? "/dashboard" : "/auth"} replace />;
 }
